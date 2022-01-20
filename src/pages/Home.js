@@ -32,6 +32,16 @@ class Home extends Component {
     // console.log(productsObj);
   };
 
+  getCategory = async ({ target }) => {
+    const { id } = target;
+    const productsObj = await getProductsFromCategoryAndQuery(id, '');
+    this.setState({
+      productsList: productsObj.results,
+      showProducts: true,
+      inputValue: '',
+    });
+  }
+
   renderProductsList = () => {
     const { productsList } = this.state;
     if (productsList.length === 0) {
@@ -87,7 +97,7 @@ class Home extends Component {
             { showProducts && this.renderProductsList() }
           </section>
         </section>
-        <AsideCategoriesMenu />
+        <AsideCategoriesMenu onChangeEvent={ this.getCategory } />
       </main>
     );
   }
