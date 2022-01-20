@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import AsideCategoriesMenu from '../components/AsideCategoriesMenu';
 import LabelAndInput from '../components/LabelAndInput';
+import iconShoppingCart from '../icons/carrinho-de-compras.png';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Card from '../components/Card';
 
@@ -52,24 +55,34 @@ class Home extends Component {
     const { inputValue, showProducts } = this.state;
     return (
       <main>
-        <LabelAndInput
-          labelContent="Procurar"
-          inputID="query-input"
-          dataTestid="query-input"
-          inputType="text"
-          inputValue={ inputValue }
-          onInputChange={ this.handleInputChange }
-        />
-        <span data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </span>
-        <button
+        <section className="section1">
+          <LabelAndInput
+            labelContent="Procurar"
+            inputID="input-search-product"
+            inputType="text"
+            inputValue={ inputValue }
+            onInputChange={ this.handleInputChange }
+          />
+          <Link to="/shoppingcart" data-testid="shopping-cart-button">
+            <img
+              src={ iconShoppingCart }
+              alt="Icone Carrinho de Compras"
+              className="icon-shopping-cart"
+            />
+          </Link>
+          <br />
+          <p data-testid="home-initial-message">
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </p>
+          <button
           type="button"
           data-testid="query-button"
           onClick={ this.handleInputButton }
-        >
-          Buscar
-        </button>
+          >
+            Buscar
+          </button>
+        </section>
+        <AsideCategoriesMenu />
         { showProducts && this.renderProductsList() }
       </main>
     );
