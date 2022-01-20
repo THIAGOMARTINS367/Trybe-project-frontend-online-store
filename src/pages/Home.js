@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import AsideCategoriesMenu from '../components/AsideCategoriesMenu';
 import LabelAndInput from '../components/LabelAndInput';
-import iconShoppingCart from '../icons/carrinho-de-compras.png';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Card from '../components/Card';
 
@@ -40,13 +38,13 @@ class Home extends Component {
     const products = productsList.map((product) => {
       const { title, thumbnail, price, id } = product;
       // eslint-disable-next-line react/jsx-wrap-multilines
-      return <Card
+      return (<Card
         title={ title }
         thumbnail={ thumbnail }
         price={ price }
         key={ id }
         dataTestid="product"
-      />;
+      />);
     });
     return products;
   }
@@ -75,9 +73,9 @@ class Home extends Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
           <button
-          type="button"
-          data-testid="query-button"
-          onClick={ this.handleInputButton }
+            type="button"
+            data-testid="query-button"
+            onClick={ this.handleInputButton }
           >
             Buscar
           </button>
