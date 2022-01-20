@@ -80,7 +80,6 @@ class Home extends Component {
             Buscar
           </button>
         </section>
-        <AsideCategoriesMenu />
         { showProducts && this.renderProductsList() }
       </main>
     );
