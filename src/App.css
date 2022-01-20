@@ -1,3 +1,32 @@
 .icon-shopping-cart {
   width: 40px;
 }
+
+main {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  margin: 30px;
+}
+
+aside {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-right: 20px;
+  width: 370px;
+}
+
+img {
+  display: flex;
+}
+
+.section1 {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 20px;
+}
