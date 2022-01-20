@@ -6,6 +6,7 @@ class Card extends React.Component {
     const { thumbnail, title, price, dataTestid } = this.props;
     return (
       <div data-testid={ dataTestid }>
+        <hr />
         <img src={ thumbnail } alt={ title } />
         <h3>{ title }</h3>
         <h2>{ price }</h2>

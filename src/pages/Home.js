@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import LabelAndInput from '../components/LabelAndInput';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Card from '../components/Card';
+import AsideCategoriesMenu from '../components/AsideCategoriesMenu';
+import iconShoppingCart from '../icons/carrinho-de-compras.png';
 
 class Home extends Component {
   constructor() {
@@ -27,7 +29,7 @@ class Home extends Component {
       showProducts: true,
       inputValue: '',
     });
-    // console.log(this.state.productsList);
+    // console.log(productsObj);
   };
 
   renderProductsList = () => {
@@ -37,14 +39,15 @@ class Home extends Component {
     }
     const products = productsList.map((product) => {
       const { title, thumbnail, price, id } = product;
-      // eslint-disable-next-line react/jsx-wrap-multilines
-      return (<Card
-        title={ title }
-        thumbnail={ thumbnail }
-        price={ price }
-        key={ id }
-        dataTestid="product"
-      />);
+      return (
+        <Card
+          key={ id }
+          title={ title }
+          thumbnail={ thumbnail }
+          price={ price }
+          dataTestid="product"
+        />
+      );
     });
     return products;
   }
@@ -60,6 +63,7 @@ class Home extends Component {
             inputType="text"
             inputValue={ inputValue }
             onInputChange={ this.handleInputChange }
+            dataTestid="query-input"
           />
           <Link to="/shoppingcart" data-testid="shopping-cart-button">
             <img
@@ -79,8 +83,11 @@ class Home extends Component {
           >
             Buscar
           </button>
+          <section className="section-products">
+            { showProducts && this.renderProductsList() }
+          </section>
         </section>
-        { showProducts && this.renderProductsList() }
+        <AsideCategoriesMenu />
       </main>
     );
   }
