@@ -31,10 +31,14 @@ LabelAndInput.propTypes = {
   labelContent: PropTypes.string.isRequired,
   inputID: PropTypes.string.isRequired,
   inputType: PropTypes.string.isRequired,
+  inputValue: PropTypes.string,
+  onInputChange: PropTypes.func,
   dataTestid: PropTypes.string,
 };
 
 LabelAndInput.defaultProps = {
+  inputValue: '',
+  onInputChange: () => '',
   dataTestid: '',
 };
 

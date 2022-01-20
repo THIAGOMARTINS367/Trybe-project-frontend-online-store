@@ -4,7 +4,7 @@ import LabelAndInput from '../components/LabelAndInput';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Card from '../components/Card';
 import AsideCategoriesMenu from '../components/AsideCategoriesMenu';
-import iconShoppingCart from '../icons/carrinho-de-compras.png'
+import iconShoppingCart from '../icons/carrinho-de-compras.png';
 
 class Home extends Component {
   constructor() {
@@ -41,7 +41,7 @@ class Home extends Component {
       const { title, thumbnail, price, id } = product;
       return (
         <Card
-          key={ id}
+          key={ id }
           title={ title }
           thumbnail={ thumbnail }
           price={ price }
