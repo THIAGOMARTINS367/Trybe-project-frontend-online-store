@@ -13,3 +13,10 @@ export async function getProductsFromCategoryAndQuery(categoryId, query) {
     .catch((erro) => erro);
   return fetchResult;
 }
+
+export async function getProductDetails(productId) {
+  const fetchProductDetails = await fetch(`https://api.mercadolibre.com/items/${productId}`)
+    .catch((erro) => erro);
+  const data = fetchProductDetails.json();
+  return data;
+}
