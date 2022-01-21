@@ -30,3 +30,7 @@ img {
 label {
   margin-bottom: 20px;
 }
+
+.product-description {
+  line-height: 30px;
+}

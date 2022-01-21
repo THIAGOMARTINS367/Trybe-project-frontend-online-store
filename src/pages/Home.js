@@ -55,6 +55,7 @@ class Home extends Component {
           title={ title }
           thumbnail={ thumbnail }
           price={ price }
+          linkForId={ id }
           dataTestid="product"
         />
       );
