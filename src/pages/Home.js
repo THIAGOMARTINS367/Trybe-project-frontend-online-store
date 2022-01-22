@@ -14,20 +14,20 @@ class Home extends Component {
       inputValue: '',
       showProducts: false,
       shoppingCart: [],
-      searching: false,
     };
   }
 
   handleInputChange = ({ target }) => {
     this.setState({ inputValue: target.value });
-    // console.log(this.state.inputValue)
   }
 
   addShoppingCart = ({ target }) => {
     const { shoppingCart } = this.state;
     const { name } = target;
     shoppingCart.push(name);
-    this.setState({ searching: false });
+    this.setState((prevState) => (
+      { inputValue: prevState.inputValue }
+    ));
   }
 
   handleInputButton = async () => {
@@ -38,7 +38,6 @@ class Home extends Component {
       showProducts: true,
       inputValue: '',
     });
-    // console.log(productsObj);
   };
 
   getCategory = async ({ target }) => {

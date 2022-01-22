@@ -33,7 +33,12 @@ Card.propTypes = {
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   linkForId: PropTypes.string.isRequired,
+  onClickEvent: PropTypes.func,
   dataTestid: PropTypes.string.isRequired,
+};
+
+Card.defaultProps = {
+  onClickEvent: () => '',
 };
 
 export default Card;

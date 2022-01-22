@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getProductDetails } from '../services/api';
 
 class ShoppingCart extends Component {
@@ -7,41 +8,38 @@ class ShoppingCart extends Component {
 
     this.state = {
       shoppingCartData: [],
-      temporaryShoppingCartData: [],
-      searchedProducts: [],
-      searching: false,
     };
   }
 
   componentDidMount() {
-    const { productsId } = this.props.match.params;
-    const { shoppingCartData, temporaryShoppingCartData } = this.state;
-    const productsIdFormatted = productsId.replace('[', '').replace(']', ',').split(',');
-    // console.log(productsIdFormatted1);
-    productsIdFormatted.map(async (elementId) => {
-      // console.log('elementId: ', elementId);
-      const elementIdFormatted = elementId.replace('"', '').replace('"', '');
-      if (elementIdFormatted.length > 0) {
-        const productsObj = await getProductDetails(elementIdFormatted);
-        productsObj.productQuantity = 1;
-        temporaryShoppingCartData.push(productsObj);
-        this.setState({ searching: false });
+    const { match } = this.props;
+    const { productsId } = match.params;
+    const { shoppingCartData } = this.state;
+    const productsIds = productsId.replace('[', '').replace(']', ',').split(',');
+    let productsIdsFormatted = [];
+    productsIds.map((elementId) => {
+      if (elementId.length > 0) {
+        productsIdsFormatted.push(elementId.replace('"', '').replace('"', ''));
       }
-      temporaryShoppingCartData.map((element) => {
-        shoppingCartData.map((element2) => {
-          if (element.id === element2.id) {
-            element2.productQuantity += 1;
-            this.setState({ searching: false });
-          }
-        });
-        console.log('shoppingCartData.includes(element.id)', shoppingCartData.includes(element.id));
-        if (shoppingCartData.includes(element.id) === false) {
-          const a = element;
-          a.productQuantity = 1;
-          shoppingCartData.push(a);
-          this.setState({ searching: false });
-        }
-      });
+      return '';
+    });
+    const productQuantity = {};
+    productsIdsFormatted.map((elementId) => {
+      if (productQuantity[elementId]) {
+        productQuantity[elementId] += 1;
+      } else {
+        productQuantity[elementId] = 1;
+      }
+      return '';
+    });
+    productsIdsFormatted = Object.keys(productQuantity);
+    productsIdsFormatted.map(async (element) => {
+      const productObj = await getProductDetails(element);
+      productObj.product_Quantity = productQuantity[element];
+      shoppingCartData.push(productObj);
+      this.setState((prevState) => (
+        { shoppingCartData: prevState.shoppingCartData }
+      ));
     });
   }
 
@@ -69,7 +67,9 @@ class ShoppingCart extends Component {
                     <br />
                     <h3>
                       Quantidade:
-                      {element.productQuantity}
+                      <span data-testid="shopping-cart-product-quantity">
+                        {` ${element.product_Quantity}`}
+                      </span>
                     </h3>
                   </div>
                 ))
@@ -81,5 +81,16 @@ class ShoppingCart extends Component {
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  match: PropTypes.shape({
+    isExact: PropTypes.bool,
+    params: PropTypes.objectOf(PropTypes.string),
+  }),
+};
+
+ShoppingCart.defaultProps = {
+  match: {},
+};
 
 export default ShoppingCart;
