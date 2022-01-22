@@ -13,12 +13,21 @@ class Home extends Component {
       productsList: [],
       inputValue: '',
       showProducts: false,
+      shoppingCart: [],
     };
   }
 
   handleInputChange = ({ target }) => {
     this.setState({ inputValue: target.value });
-    // console.log(this.state.inputValue)
+  }
+
+  addShoppingCart = ({ target }) => {
+    const { shoppingCart } = this.state;
+    const { name } = target;
+    shoppingCart.push(name);
+    this.setState((prevState) => (
+      { inputValue: prevState.inputValue }
+    ));
   }
 
   handleInputButton = async () => {
@@ -29,7 +38,6 @@ class Home extends Component {
       showProducts: true,
       inputValue: '',
     });
-    // console.log(productsObj);
   };
 
   getCategory = async ({ target }) => {
@@ -56,6 +64,7 @@ class Home extends Component {
           thumbnail={ thumbnail }
           price={ price }
           linkForId={ id }
+          onClickEvent={ this.addShoppingCart }
           dataTestid="product"
         />
       );
@@ -64,7 +73,8 @@ class Home extends Component {
   }
 
   render() {
-    const { inputValue, showProducts } = this.state;
+    const { inputValue, showProducts, shoppingCart } = this.state;
+    const object = JSON.stringify(shoppingCart);
     return (
       <main>
         <section className="section1">
@@ -76,7 +86,7 @@ class Home extends Component {
             onInputChange={ this.handleInputChange }
             dataTestid="query-input"
           />
-          <Link to="/shoppingcart" data-testid="shopping-cart-button">
+          <Link to={ `/shoppingcart/${object}` } data-testid="shopping-cart-button">
             <img
               src={ iconShoppingCart }
               alt="Icone Carrinho de Compras"
