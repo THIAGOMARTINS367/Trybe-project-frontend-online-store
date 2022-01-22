@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import LabelAndInput from '../components/LabelAndInput';
-import { getProductsFromCategoryAndQuery } from '../services/api';
-import Card from '../components/Card';
+import PropTypes from 'prop-types';
+
 import AsideCategoriesMenu from '../components/AsideCategoriesMenu';
+import Card from '../components/Card';
+import LabelAndInput from '../components/LabelAndInput';
+
+import { getProductsFromCategoryAndQuery } from '../services/api';
+
 import iconShoppingCart from '../icons/carrinho-de-compras.png';
 
 class Home extends Component {
@@ -13,7 +17,7 @@ class Home extends Component {
       productsList: [],
       inputValue: '',
       showProducts: false,
-      shoppingCart: [],
+      // shoppingCart: [],
     };
   }
 
@@ -21,14 +25,16 @@ class Home extends Component {
     this.setState({ inputValue: target.value });
   }
 
-  addShoppingCart = ({ target }) => {
-    const { shoppingCart } = this.state;
-    const { name } = target;
-    shoppingCart.push(name);
-    this.setState((prevState) => (
-      { inputValue: prevState.inputValue }
-    ));
-  }
+  // Pode apagar, né? A props onAddBtn foi adicionada ao botão.
+
+  // addShoppingCart = ({ target }) => {
+  //   const { shoppingCart } = this.state;
+  //   const { name } = target;
+  //   shoppingCart.push(name);
+  //   this.setState((prevState) => (
+  //     { inputValue: prevState.inputValue }
+  //   ));
+  // }
 
   handleInputButton = async () => {
     const { inputValue } = this.state;
@@ -52,6 +58,8 @@ class Home extends Component {
 
   renderProductsList = () => {
     const { productsList } = this.state;
+    const { onAddToCart } = this.props;
+
     if (productsList.length === 0) {
       return 'Nenhum produto foi encontrado';
     }
@@ -63,9 +71,11 @@ class Home extends Component {
           title={ title }
           thumbnail={ thumbnail }
           price={ price }
-          linkForId={ id }
-          onClickEvent={ this.addShoppingCart }
+          // linkForId={ id }
+          id={ id }
+          // onClickEvent={ this.addShoppingCart }
           dataTestid="product"
+          onAddToCart={ onAddToCart }
         />
       );
     });
@@ -73,8 +83,11 @@ class Home extends Component {
   }
 
   render() {
-    const { inputValue, showProducts, shoppingCart } = this.state;
-    const object = JSON.stringify(shoppingCart);
+    const { inputValue,
+      showProducts,
+      // shoppingCart
+    } = this.state;
+    // const object = JSON.stringify(shoppingCart);
     return (
       <main>
         <section className="section1">
@@ -86,7 +99,7 @@ class Home extends Component {
             onInputChange={ this.handleInputChange }
             dataTestid="query-input"
           />
-          <Link to={ `/shoppingcart/${object}` } data-testid="shopping-cart-button">
+          <Link to="/shoppingcart/" data-testid="shopping-cart-button">
             <img
               src={ iconShoppingCart }
               alt="Icone Carrinho de Compras"
@@ -115,3 +128,7 @@ class Home extends Component {
 }
 
 export default Home;
+
+Home.propTypes = {
+  onAddToCart: PropTypes.func.isRequired,
+};
