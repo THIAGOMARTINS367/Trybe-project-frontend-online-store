@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import ItemInCart from '../components/ItemInCart';
 
 export default class ShoppingCart extends Component {
