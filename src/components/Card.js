@@ -3,25 +3,40 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class Card extends React.Component {
+  handleAddBtn = ({ target }) => {
+    const { name } = target;
+    const { onAddToCart } = this.props;
+    onAddToCart(name);
+  }
+
   render() {
-    const { thumbnail, title, price, linkForId, onClickEvent, dataTestid } = this.props;
+    const {
+      id,
+      thumbnail,
+      title,
+      price,
+      dataTestid,
+    } = this.props;
+
+    const priceFormatted = `R$ ${(price.toFixed(2)).replace('.', ',')}`;
+
     return (
       <section>
-        <Link to={ `/product/${linkForId}` } data-testid="product-detail-link">
+        <Link to={ `/product/${id}` } data-testid="product-detail-link">
           <div data-testid={ dataTestid }>
             <hr />
             <img src={ thumbnail } alt={ title } />
-            <h3>{ title }</h3>
-            <h2>{ price }</h2>
+            <h2>{ title }</h2>
+            <h3>{ priceFormatted }</h3>
           </div>
         </Link>
         <button
           type="button"
-          onClick={ onClickEvent }
+          onClick={ this.handleAddBtn }
           data-testid="product-add-to-cart"
-          name={ linkForId }
+          name={ id }
         >
-          Adicionar ao carrinho
+          Adicionar ao Carrinho
         </button>
       </section>
     );
@@ -29,16 +44,16 @@ class Card extends React.Component {
 }
 
 Card.propTypes = {
+  id: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  linkForId: PropTypes.string.isRequired,
-  onClickEvent: PropTypes.func,
+  onAddToCart: PropTypes.func,
   dataTestid: PropTypes.string.isRequired,
 };
 
 Card.defaultProps = {
-  onClickEvent: () => '',
+  onAddToCart: () => '',
 };
 
 export default Card;

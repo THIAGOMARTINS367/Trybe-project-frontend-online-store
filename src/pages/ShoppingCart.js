@@ -1,96 +1,57 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getProductDetails } from '../services/api';
 
-class ShoppingCart extends Component {
-  constructor() {
-    super();
+import ItemInCart from '../components/ItemInCart';
 
-    this.state = {
-      shoppingCartData: [],
-    };
-  }
+export default class ShoppingCart extends Component {
+  renderItemsInCart = () => {
+    const { itemsInCart } = this.props;
 
-  componentDidMount() {
-    const { match } = this.props;
-    const { productsId } = match.params;
-    const { shoppingCartData } = this.state;
-    const productsIds = productsId.replace('[', '').replace(']', ',').split(',');
-    let productsIdsFormatted = [];
-    productsIds.map((elementId) => {
-      if (elementId.length > 0) {
-        productsIdsFormatted.push(elementId.replace('"', '').replace('"', ''));
-      }
-      return '';
+    if (itemsInCart.length === 0) {
+      return (
+        <span data-testid="shopping-cart-empty-message">
+          Seu carrinho está vazio.
+        </span>
+      );
+    }
+
+    const itemsList = itemsInCart.map((item) => {
+      const { id, title, quantity } = item;
+      return (
+        <ItemInCart
+          key={ id }
+          title={ title }
+          quantity={ quantity }
+        />
+      );
     });
-    const productQuantity = {};
-    productsIdsFormatted.map((elementId) => {
-      if (productQuantity[elementId]) {
-        productQuantity[elementId] += 1;
-      } else {
-        productQuantity[elementId] = 1;
-      }
-      return '';
-    });
-    productsIdsFormatted = Object.keys(productQuantity);
-    productsIdsFormatted.map(async (element) => {
-      const productObj = await getProductDetails(element);
-      productObj.product_Quantity = productQuantity[element];
-      shoppingCartData.push(productObj);
-      this.setState((prevState) => (
-        { shoppingCartData: prevState.shoppingCartData }
-      ));
-    });
-  }
+
+    return itemsList;
+  };
 
   render() {
-    const { shoppingCartData } = this.state;
     return (
       <section>
-        {
-          shoppingCartData.length === 0 ? (
-            <span data-testid="shopping-cart-empty-message">
-              Seu carrinho está vazio.
-            </span>
-          ) : (
-            <section>
-              {
-                shoppingCartData.map((element) => (
-                  <div key={ element.id }>
-                    <hr />
-                    <div>
-                      <img src={ element.thumbnail } alt={ element.title } />
-                    </div>
-                    <h2 data-testid="shopping-cart-product-name">{ element.title }</h2>
-                    <br />
-                    <h3>{ element.price }</h3>
-                    <br />
-                    <h3>
-                      Quantidade:
-                      <span data-testid="shopping-cart-product-quantity">
-                        {` ${element.product_Quantity}`}
-                      </span>
-                    </h3>
-                  </div>
-                ))
-              }
-            </section>
-          )
-        }
+        { this.renderItemsInCart() }
       </section>
     );
   }
 }
 
+// Ref: https://stackoverflow.com/questions/41761135/passing-proptypes-shape-to-proptypes-arrayof-in-react
+
+const item = PropTypes.shape({
+  // id: PropTypes.string,
+  title: PropTypes.string,
+  // price: PropTypes.number,
+  // thumbnail: PropTypes.string,
+  quantity: PropTypes.number,
+});
+
 ShoppingCart.propTypes = {
-  match: PropTypes.shape({
-    isExact: PropTypes.bool,
-    params: PropTypes.objectOf(PropTypes.string),
-  }),
+  itemsInCart: PropTypes.arrayOf(item),
 };
 
 ShoppingCart.defaultProps = {
-  match: {},
+  itemsInCart: [],
 };
-
-export default ShoppingCart;
