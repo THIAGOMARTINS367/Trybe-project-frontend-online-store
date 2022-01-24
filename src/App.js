@@ -38,8 +38,6 @@ class App extends React.Component {
     }));
   }
 
-  // Req 10:
-
   // removeItemFromCart = (itemID) => {
   //   const { itemsInCart } = this.state;
 
