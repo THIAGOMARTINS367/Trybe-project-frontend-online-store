@@ -21,13 +21,6 @@ class ProductDisplayCard extends Component {
     getProductDetails(id).then((data) => this.setState({ productData: data }));
   }
 
-  // handleAddBtn = () => {
-  //   const { productData: { id } } = this.state;
-  //   const { onAddToCart } = this.props;
-
-  //   onAddToCart(id);
-  // }
-
   render() {
     const { onAddToCart } = this.props;
     const { productData } = this.state;
@@ -73,7 +66,6 @@ class ProductDisplayCard extends Component {
           <button
             type="button"
             data-testid="product-detail-add-to-cart"
-            // onClick={ this.handleAddBtn }
             onClick={ () => onAddToCart(id) }
           >
             Adicionar ao Carrinho

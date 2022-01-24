@@ -17,7 +17,8 @@ class AsideCategoriesMenu extends Component {
 
   render() {
     const { dataCategories } = this.state;
-    const { onChangeEvent } = this.props;
+    const { onEventChange } = this.props;
+
     return (
       <aside>
         {
@@ -31,8 +32,10 @@ class AsideCategoriesMenu extends Component {
               <input
                 type="radio"
                 id={ element.id }
-                name="radioButton-for-category"
-                onChange={ onChangeEvent }
+                // name="radioButton-for-category"
+                onChange={ () => onEventChange(element.id) }
+                name={ element.id }
+                // onChange={ this.handleChangeEvent }
               />
               { element.name }
             </label>
@@ -44,11 +47,11 @@ class AsideCategoriesMenu extends Component {
 }
 
 AsideCategoriesMenu.propTypes = {
-  onChangeEvent: PropTypes.func,
+  onEventChange: PropTypes.func,
 };
 
 AsideCategoriesMenu.defaultProps = {
-  onChangeEvent: () => '',
+  onEventChange: () => '',
 };
 
 export default AsideCategoriesMenu;

@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import ProductDisplayCard from './pages/ProductDisplayCard';
 import ShoppingCart from './pages/ShoppingCart';
 
-import { getProductDetails } from './services/api';
+import { getProductsFromCategoryAndQuery } from './services/api';
 
 import './App.css';
 
@@ -15,12 +15,34 @@ class App extends React.Component {
 
     this.state = {
       itemsInCart: [],
-      // itemID: '',
+      productsList: [],
+      showProducts: false,
     };
   }
 
+  searchProductsByQuery = async (query) => {
+    const productsObj = await getProductsFromCategoryAndQuery('', query);
+    this.setState({
+      productsList: productsObj.results,
+      showProducts: true,
+    });
+  };
+
+  searchProductsByCategory = async (categoryID) => {
+    const productsObj = await getProductsFromCategoryAndQuery(categoryID, '');
+    this.setState({
+      productsList: productsObj.results,
+      showProducts: true,
+    });
+  }
+
   saveItemsInCart = async (itemID) => {
-    const productObj = await getProductDetails(itemID);
+    const { productsList } = this.state;
+    const productObj = productsList.find((product) => {
+      const { id } = product;
+      return id === itemID;
+    });
+
     const { id, title, price, thumbnail } = productObj;
     const newItem = {
       id,
@@ -141,7 +163,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { itemsInCart } = this.state;
+    const { itemsInCart, showProducts, productsList } = this.state;
 
     return (
       <BrowserRouter>
@@ -164,6 +186,7 @@ class App extends React.Component {
               <ProductDisplayCard
                 { ...props }
                 onAddToCart={ this.addToCart }
+                productsList={ productsList }
               />) }
           />
           <Route
@@ -173,6 +196,10 @@ class App extends React.Component {
               <Home
                 { ...props }
                 onAddToCart={ this.addToCart }
+                onInputBtn={ this.searchProductsByQuery }
+                onEventChange={ this.searchProductsByCategory }
+                showProducts={ showProducts }
+                productsList={ productsList }
               />) }
           />
         </Switch>
