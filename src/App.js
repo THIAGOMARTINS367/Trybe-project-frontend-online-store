@@ -15,43 +15,130 @@ class App extends React.Component {
 
     this.state = {
       itemsInCart: [],
+      // itemID: '',
     };
   }
 
-  addToCart = async (itemID) => {
+  saveItemsInCart = async (itemID) => {
     const productObj = await getProductDetails(itemID);
-
     const { id, title, price, thumbnail } = productObj;
-    const item = {
+    const newItem = {
       id,
       title,
       price,
       thumbnail,
       quantity: 1,
     };
-
     // A forma mais indicada para atualizar o state com array é
     // utilizando o setState com callback e spread operator em vez de push.
     // Fonte: Aulas do bloco 11 do Course.
     this.setState((prevState) => ({
-      itemsInCart: [...prevState.itemsInCart, item],
+      itemsInCart: [...prevState.itemsInCart, newItem],
     }));
   }
 
-  // removeItemFromCart = (itemID) => {
-  //   const { itemsInCart } = this.state;
+  addToCart = async (itemID) => {
+    const { itemsInCart } = this.state;
+    const ITEM_NOT_FOUND = -1;
 
-  //   const productObj = itemsInCart.find((product) => {
-  //     const { id } = product;
-  //     return id === itemID;
-  //   });
+    const indexOfItem = itemsInCart.findIndex((item) => {
+      const { id } = item;
+      return id === itemID;
+    });
 
-  //   const productIndex = itemsInCart.indexOf(productObj);
-  //   // Ref? https://www.mundojs.com.br/2018/09/06/removendo-elementos-de-uma-lista-array-javascript/
-  //   const newList = itemsInCart.splice(productIndex, 1);
+    if (indexOfItem === ITEM_NOT_FOUND) {
+      this.saveItemsInCart(itemID);
+    } else {
+      this.increaseQuantity(itemID);
+    }
+  }
 
-  //   this.setState({ itemsInCart: newList });
-  // }
+  removeItemFromCart = (itemID) => {
+    const { itemsInCart } = this.state;
+
+    const indexOfItem = itemsInCart.findIndex((item) => {
+      const { id } = item;
+      return id === itemID;
+    });
+
+    // Ref? https://www.mundojs.com.br/2018/09/06/removendo-elementos-de-uma-lista-array-javascript/
+    const newList = [
+      ...itemsInCart.slice(0, indexOfItem),
+      ...itemsInCart.slice((indexOfItem + 1), (itemsInCart.length)),
+    ];
+
+    this.setState({ itemsInCart: newList });
+  }
+
+  decreaseQuantity = (itemID) => {
+    const { itemsInCart } = this.state;
+
+    const indexOfItem = itemsInCart.findIndex((item) => {
+      const { id } = item;
+      return id === itemID;
+    });
+
+    const { id, title, price, thumbnail, quantity } = itemsInCart[indexOfItem];
+
+    if (quantity === 1) {
+      this.removeItemFromCart(itemID);
+    } else {
+      const updatedItem = {
+        id,
+        title,
+        price,
+        thumbnail,
+        quantity: (quantity - 1),
+      };
+
+      // Ref: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+      const newList = [
+        ...itemsInCart.slice(0, indexOfItem),
+        updatedItem,
+        ...itemsInCart.slice((indexOfItem + 1), (itemsInCart.length)),
+      ];
+
+      this.setState({ itemsInCart: newList });
+    }
+  }
+
+  increaseQuantity = (itemID) => {
+    const { itemsInCart } = this.state;
+
+    const indexOfItem = itemsInCart.findIndex((item) => {
+      const { id } = item;
+      return id === itemID;
+    });
+
+    const { id, title, price, thumbnail, quantity } = itemsInCart[indexOfItem];
+    const updatedItem = {
+      id,
+      title,
+      price,
+      thumbnail,
+      quantity: (quantity + 1),
+    };
+
+    // Ref: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+    const newList = [
+      ...itemsInCart.slice(0, indexOfItem),
+      updatedItem,
+      ...itemsInCart.slice((indexOfItem + 1), (itemsInCart.length)),
+    ];
+
+    this.setState({ itemsInCart: newList });
+  }
+
+  sumItemsPrice = () => {
+    const { itemsInCart } = this.state;
+
+    const totalPrice = itemsInCart.reduce((acc, curr) => {
+      const { quantity, price } = curr;
+      return (quantity * price);
+    }, 0);
+
+    return totalPrice;
+  }
 
   render() {
     const { itemsInCart } = this.state;
@@ -65,6 +152,10 @@ class App extends React.Component {
               <ShoppingCart
                 { ...props }
                 itemsInCart={ itemsInCart }
+                onRemoveBtn={ this.removeItemFromCart }
+                onIncreaseBtn={ this.increaseQuantity }
+                onDecreaseBtn={ this.decreaseQuantity }
+                onSumItemsPrice={ this.sumItemsPrice }
               />) }
           />
           <Route

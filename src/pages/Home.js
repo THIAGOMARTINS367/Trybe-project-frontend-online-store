@@ -64,7 +64,8 @@ class Home extends Component {
       return 'Nenhum produto foi encontrado';
     }
     const products = productsList.map((product) => {
-      const { title, thumbnail, price, id } = product;
+      const { title, thumbnail, id } = product;
+      const { price = 0 } = product;
       return (
         <Card
           key={ id }
