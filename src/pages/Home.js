@@ -45,9 +45,7 @@ class Home extends Component {
           title={ title }
           thumbnail={ thumbnail }
           price={ price }
-          // linkForId={ id }
           id={ id }
-          // onClickEvent={ this.addShoppingCart }
           dataTestid="product"
           onAddToCart={ onAddToCart }
         />
@@ -73,13 +71,6 @@ class Home extends Component {
             dataTestid="query-input"
           />
           <Link to="/shoppingcart/" data-testid="shopping-cart-button">
-            {/* <Link
-            to={ {
-              pathname: '/shoppingcart/',
-              productsList,
-            } }
-            data-testid="shopping-cart-button"
-          > */}
             <img
               src={ iconShoppingCart }
               alt="Icone Carrinho de Compras"

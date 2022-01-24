@@ -32,10 +32,9 @@ class AsideCategoriesMenu extends Component {
               <input
                 type="radio"
                 id={ element.id }
-                // name="radioButton-for-category"
+                name="radioButton-for-category"
                 onChange={ () => onEventChange(element.id) }
-                name={ element.id }
-                // onChange={ this.handleChangeEvent }
+                // name={ element.id }
               />
               { element.name }
             </label>

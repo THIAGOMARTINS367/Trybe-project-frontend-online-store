@@ -156,7 +156,7 @@ class App extends React.Component {
 
     const totalPrice = itemsInCart.reduce((acc, curr) => {
       const { quantity, price } = curr;
-      return (quantity * price);
+      return (quantity * price) + acc;
     }, 0);
 
     return totalPrice;
@@ -178,6 +178,7 @@ class App extends React.Component {
                 onIncreaseBtn={ this.increaseQuantity }
                 onDecreaseBtn={ this.decreaseQuantity }
                 onSumItemsPrice={ this.sumItemsPrice }
+                // totalPrice={ totalPrice }
               />) }
           />
           <Route

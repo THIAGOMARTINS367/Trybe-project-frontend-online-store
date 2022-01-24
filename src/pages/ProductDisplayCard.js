@@ -28,7 +28,9 @@ class ProductDisplayCard extends Component {
     // let priceFormatted = String(price);
     // priceFormatted = `R$ ${String(price).replace('.', ',')}`;
     const { id, title, thumbnail, price = 0.00, attributes = [] } = productData;
-    const priceFormatted = `R$ ${(price.toFixed(2)).replace('.', ',')}`;
+    // const priceFormatted = `R$ ${(price.toFixed(2)).replace('.', ',')}`;
+    const priceFormatted = price
+      .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 
     return (
       <>

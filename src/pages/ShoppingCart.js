@@ -30,12 +30,16 @@ export default class ShoppingCart extends Component {
       );
     });
 
-    const totalPrice = `Total: R$ ${(onSumItemsPrice().toFixed(2)).replace('.', ',')}`;
+    // const totalPrice = `Total: R$ ${(onSumItemsPrice().toFixed(2)).replace('.', ',')}`;
+    const totalPrice = `Total: ${onSumItemsPrice()
+      .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`;
 
     return (
       <>
         <section>{itemsList}</section>
-        <span><strong>{totalPrice}</strong></span>
+        <span>
+          <strong>{totalPrice}</strong>
+        </span>
       </>);
   };
 
