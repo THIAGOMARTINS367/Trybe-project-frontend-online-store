@@ -6,18 +6,13 @@ import AsideCategoriesMenu from '../components/AsideCategoriesMenu';
 import Card from '../components/Card';
 import LabelAndInput from '../components/LabelAndInput';
 
-import { getProductsFromCategoryAndQuery } from '../services/api';
-
 import iconShoppingCart from '../icons/carrinho-de-compras.png';
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
-      productsList: [],
       inputValue: '',
-      showProducts: false,
-      // shoppingCart: [],
     };
   }
 
@@ -25,55 +20,32 @@ class Home extends Component {
     this.setState({ inputValue: target.value });
   }
 
-  // Pode apagar, né? A props onAddBtn foi adicionada ao botão.
-
-  // addShoppingCart = ({ target }) => {
-  //   const { shoppingCart } = this.state;
-  //   const { name } = target;
-  //   shoppingCart.push(name);
-  //   this.setState((prevState) => (
-  //     { inputValue: prevState.inputValue }
-  //   ));
-  // }
-
   handleInputButton = async () => {
     const { inputValue } = this.state;
-    const productsObj = await getProductsFromCategoryAndQuery('', inputValue);
+    const { onInputBtn } = this.props;
+
+    onInputBtn(inputValue);
     this.setState({
-      productsList: productsObj.results,
-      showProducts: true,
       inputValue: '',
     });
   };
 
-  getCategory = async ({ target }) => {
-    const { id } = target;
-    const productsObj = await getProductsFromCategoryAndQuery(id, '');
-    this.setState({
-      productsList: productsObj.results,
-      showProducts: true,
-      inputValue: '',
-    });
-  }
-
   renderProductsList = () => {
-    const { productsList } = this.state;
-    const { onAddToCart } = this.props;
+    const { onAddToCart, productsList } = this.props;
 
     if (productsList.length === 0) {
       return 'Nenhum produto foi encontrado';
     }
     const products = productsList.map((product) => {
-      const { title, thumbnail, price, id } = product;
+      const { title, thumbnail, id } = product;
+      const { price = 0 } = product;
       return (
         <Card
           key={ id }
           title={ title }
           thumbnail={ thumbnail }
           price={ price }
-          // linkForId={ id }
           id={ id }
-          // onClickEvent={ this.addShoppingCart }
           dataTestid="product"
           onAddToCart={ onAddToCart }
         />
@@ -84,10 +56,9 @@ class Home extends Component {
 
   render() {
     const { inputValue,
-      showProducts,
-      // shoppingCart
     } = this.state;
-    // const object = JSON.stringify(shoppingCart);
+
+    const { showProducts, onEventChange } = this.props;
     return (
       <main>
         <section className="section1">
@@ -121,7 +92,7 @@ class Home extends Component {
             { showProducts && this.renderProductsList() }
           </section>
         </section>
-        <AsideCategoriesMenu onChangeEvent={ this.getCategory } />
+        <AsideCategoriesMenu onEventChange={ onEventChange } />
       </main>
     );
   }
@@ -131,4 +102,12 @@ export default Home;
 
 Home.propTypes = {
   onAddToCart: PropTypes.func.isRequired,
+  onInputBtn: PropTypes.func.isRequired,
+  productsList: PropTypes.arrayOf(PropTypes.shape()),
+  showProducts: PropTypes.bool.isRequired,
+  onEventChange: PropTypes.func.isRequired,
+};
+
+Home.defaultProps = {
+  productsList: [],
 };

@@ -4,50 +4,59 @@ import PropTypes from 'prop-types';
 export default class ItemInCart extends Component {
   render() {
     const {
-      // thumbnail,
+      thumbnail,
       title,
       quantity,
-      // price,
-      // id,
+      price,
+      id,
+      onRemoveBtn,
+      onDecreaseBtn,
+      onIncreaseBtn,
     } = this.props;
+
+    const priceFormatted = `R$ ${(price.toFixed(2)).replace('.', ',')}`;
 
     return (
       <div>
-        {/* <button
+        <button
           type="button"
-          name={ id }
-          onClick={ this.handleRemoveBtn }
+          name="removeBtn"
+          onClick={ () => onRemoveBtn(id) }
         >
           X
-        </button> */}
-        {/* <img src={ thumbnail } alt={ title } /> */}
+        </button>
+        <img src={ thumbnail } alt={ title } />
         <h4 data-testid="shopping-cart-product-name">{ title }</h4>
-        {/* <button
+        <button
           type="button"
           data-testid="product-decrease-quantity"
-          name={ id }
-          onClick={ this.handleDecreaseBtn }
+          name="decreaseBtn"
+          onClick={ () => onDecreaseBtn(id) }
         >
           -
-        </button> */}
+        </button>
         <div data-testid="shopping-cart-product-quantity">{ quantity }</div>
-        {/* <button
+        <button
           type="button"
           data-testid="product-increase-quantity"
-          name={ id }
-          onClick={ this.handleIncreaseBtn }
+          name="IncreaseBtn"
+          onClick={ () => onIncreaseBtn(id) }
         >
           +
         </button>
-        <h3>{ price }</h3> */}
+        <h3>{ priceFormatted }</h3>
       </div>
     );
   }
 }
 
 ItemInCart.propTypes = {
-  // thumbnail: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
-  // price: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  onRemoveBtn: PropTypes.func.isRequired,
+  onDecreaseBtn: PropTypes.func.isRequired,
+  onIncreaseBtn: PropTypes.func.isRequired,
 };

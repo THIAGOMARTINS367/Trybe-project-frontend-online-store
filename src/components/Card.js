@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class Card extends React.Component {
-  handleAddBtn = ({ target }) => {
-    const { name } = target;
-    const { onAddToCart } = this.props;
-    onAddToCart(name);
-  }
+  // handleAddBtn = ({ target }) => {
+  //   const { name } = target;
+  //   const { onAddToCart } = this.props;
+  //   onAddToCart(name);
+  // }
 
   render() {
     const {
@@ -16,9 +16,12 @@ class Card extends React.Component {
       title,
       price,
       dataTestid,
+      onAddToCart,
     } = this.props;
 
-    const priceFormatted = `R$ ${(price.toFixed(2)).replace('.', ',')}`;
+    // const priceFormatted = `R$ ${(price.toFixed(2)).replace('.', ',')}`;
+    const priceFormatted = price
+      .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 
     return (
       <section>
@@ -32,7 +35,8 @@ class Card extends React.Component {
         </Link>
         <button
           type="button"
-          onClick={ this.handleAddBtn }
+          onClick={ () => onAddToCart(id) }
+          // onClick={ this.handleAddBtn }
           data-testid="product-add-to-cart"
           name={ id }
         >
@@ -48,12 +52,12 @@ Card.propTypes = {
   thumbnail: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  onAddToCart: PropTypes.func,
+  onAddToCart: PropTypes.func.isRequired,
   dataTestid: PropTypes.string.isRequired,
 };
 
-Card.defaultProps = {
-  onAddToCart: () => '',
-};
+// Card.defaultProps = {
+//   onAddToCart: () => '',
+// };
 
 export default Card;

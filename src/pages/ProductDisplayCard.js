@@ -21,20 +21,16 @@ class ProductDisplayCard extends Component {
     getProductDetails(id).then((data) => this.setState({ productData: data }));
   }
 
-  handleAddBtn = () => {
-    const { productData: { id } } = this.state;
-    const { onAddToCart } = this.props;
-
-    onAddToCart(id);
-  }
-
   render() {
+    const { onAddToCart } = this.props;
     const { productData } = this.state;
     // const { title, thumbnail, price = '0,00', attributes = [] } = productData;
     // let priceFormatted = String(price);
     // priceFormatted = `R$ ${String(price).replace('.', ',')}`;
-    const { title, thumbnail, price = 0.00, attributes = [] } = productData;
-    const priceFormatted = `R$ ${(price.toFixed(2)).replace('.', ',')}`;
+    const { id, title, thumbnail, price = 0.00, attributes = [] } = productData;
+    // const priceFormatted = `R$ ${(price.toFixed(2)).replace('.', ',')}`;
+    const priceFormatted = price
+      .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 
     return (
       <>
@@ -72,7 +68,7 @@ class ProductDisplayCard extends Component {
           <button
             type="button"
             data-testid="product-detail-add-to-cart"
-            onClick={ this.handleAddBtn }
+            onClick={ () => onAddToCart(id) }
           >
             Adicionar ao Carrinho
           </button>
