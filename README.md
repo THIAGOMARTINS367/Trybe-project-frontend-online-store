@@ -1,5 +1,10 @@
 # Boas vindas ao repositório do projeto de Front-End Online Store!
 
+# Descrição
+Este projeto foi desenvolvido durante o período de Curso da Trybe :rocket:
+
+O projeto tem por objetivo a avaliação do trabalho em grupo e prática dos conhecimentos adquiridos na Trybe, visando o cumprimento do requisitos solicitados pela mesma.
+
 # Sumário
 
 - [Habilidades](#habilidades)
