@@ -1,17 +1,8 @@
-### Termos de acordos
-
-Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe
-
 # Boas vindas ao repositório do projeto de Front-End Online Store!
-
-Você já usa o GitHub diariamente para desenvolver os exercícios, certo? Agora, para desenvolver os projetos, você deverá seguir as instruções a seguir. Fique atento a cada passo, e se tiver qualquer dúvida, nos envie por _Slack_! #vqv 🚀
-
-Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir deste repositório, utilizando uma branch específica e um _Pull Request_ para colocar seus códigos.
 
 # Sumário
 
 - [Habilidades](#habilidades)
-- [Entregáveis](#Entregáveis)
   - [O que deverá ser desenvolvido](#o-que-deverá-ser-desenvolvido)
   - [Desenvolvimento](#desenvolvimento)
   - [Data de entrega](#data-de-entrega)
@@ -70,14 +61,6 @@ Nesse projeto, você será capaz de:
 * Entender o que é Scrum
 * Trabalhar em equipes utilizando Kanban ou Scrum de maneira eficaz
 * Praticar todas as habilidades desenvolvidas até agora no módulo de Front-End
-
----
-
-# Entregáveis
-
-Para entregar o seu projeto você deverá criar um Pull Request neste repositório.
-
-Lembre-se que você pode consultar nosso conteúdo sobre Git & GitHub no Course sempre que precisar!
 
 --- 
 
