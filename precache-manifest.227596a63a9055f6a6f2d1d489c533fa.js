@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0d3b0fc22e5c9a307f2186caefe92795",
+    "revision": "4db2311d3d96f689d8347ecc6a1d4f2f",
     "url": "/Trybe-project-frontend-online-store/index.html"
   },
   {
-    "revision": "ae20a49eb724539d731e",
+    "revision": "4638f5793b6ed5673b54",
     "url": "/Trybe-project-frontend-online-store/static/css/main.8769838b.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Trybe-project-frontend-online-store/static/js/2.03be4285.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ae20a49eb724539d731e",
-    "url": "/Trybe-project-frontend-online-store/static/js/main.b0c2db38.chunk.js"
+    "revision": "4638f5793b6ed5673b54",
+    "url": "/Trybe-project-frontend-online-store/static/js/main.4b6f2112.chunk.js"
   },
   {
     "revision": "a1bcf18393843fbbb169",
