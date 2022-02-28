@@ -166,7 +166,7 @@ class App extends React.Component {
     const { itemsInCart, showProducts, productsList } = this.state;
 
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route
             path="/shoppingcart/"
